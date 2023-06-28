@@ -1,0 +1,42 @@
+https://www.traversymedia.com/blog/next-js-13-crash-course
+
+NextJS 13 uses a new feature called React Server Components or RSC. This allows us to render components on the server.
+
+- Advantages of RSC:
+Load faster - Don't have to wait for the JavaScript to load
+Smaller client bundle size
+SEO friendly
+Access to resources the client can't access
+Hide sensitive data from the client
+More secure against XSS attacks
+Improved developer experience
+
+- Just like with anything else, there are also disadvantages:
+Not as interactive
+No component state. We can not use the useState hook.
+No component lifecycle methods. We can not use the useEffect hook.
+
+In norder to make a component client side rendered, and be ble to use useState, useEffect, and add interactivity and event listeners (onClick, ocChange, etc), only state on the top of the file:
+"use client"
+by default all components are server side rendered
+
+# Fetching data
+It's reccomended that you fetch data using server components. The reason for this is because you have more access to resources on the server, it keeps your app secure by preventing things like access tokens from being exposed to the client. It also reduces client-server waterfalls.
+
+There are three ways to fetch data in NextJS: getStaticProps, getServerSideProps and getInitialProps.
+
+With NextJS 13 and the App Router, we have a new and simplified approach. It is actually built on top of the fetch api.
+- just create a async function that makes the fetch and call it from within the component.
+*** this is a server component, so the console.log will be in the server side
+
+- In order to have a component that receives params, we need to create a dir (located at it is more convenient to), and give it the name of a word within brackets ([]). The name inside the brackets will be the name of that params. Inside that directory we need to create a file named page.jsx (this is like index.jsx in the Next structure).
+
+- Server code can go within app/api directory and the FE pages queries them.
+In this case, the index file is "route.js".
+
+- To obtain query parameters, need to have a directory with a function route.js. The request object (which is received by that function)  has an object called url, which contains a property searchParams. So, the function needs to do:
+const { searchParams } = new URL(request.url);
+// the specific param can be get using 
+const name = searchParams.get("name");
+
+
